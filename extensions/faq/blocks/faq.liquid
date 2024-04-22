@@ -1,0 +1,85 @@
+<style>
+  {{ block.settings.font_select | font_face }}
+  #faq details{
+    font-family: {{ block.settings.font_select.family }};
+    color: {{ block.settings.color }};
+    background: {{ block.settings.background }};
+  }
+  #faq details summary {
+      background: {{ block.settings.faq_heading_background }};
+  }
+  #faq details {
+      background: {{ block.settings.faq_content_background }};
+  }
+</style>
+
+<div id="faq"></div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Retrieve JSON data from Liquid
+        const faqDataString = '{{ block.settings.faq_data }}';
+        const jsonData = JSON.parse( faqDataString );
+        // Access FAQ items and render them
+        const faqContainer = document.getElementById("faq");
+        jsonData.forEach(function(item) {
+            let faqItem = document.createElement("details");
+            faqItem.innerHTML = `
+                <summary>${item.question}</summary>
+                <p>${item.answer}</p>
+            `;
+            faqContainer.appendChild(faqItem);
+        });
+    });
+</script>
+
+{% schema %}
+{
+  "name": "FAQ",
+  "target": "section",
+  "stylesheet": "app.css",
+  "javascript": "app.js",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Settings"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_data",
+      "label": "FAQ Data",
+      "default": "[{\"question\":\"Question 1\",\"answer\":\"Answer 1\"},{\"question\":\"Question 2\",\"answer\":\"Answer 2\"},{\"question\":\"Question 3\",\"answer\":\"Answer 3\"}]",
+      "info": "Enter each FAQ item as a JSON object with 'question' and 'answer' properties. Separate multiple items with commas."
+    },
+    {
+      "type": "header",
+      "content": "Styles"
+    },
+    {
+      "type": "font_picker",
+      "id": "font_select",
+      "label": "Font Family",
+      "default": "work_sans_n4"
+    },
+    {
+      "label": "Color",
+      "id": "color",
+      "type": "color",
+      "default": "#000000"
+    },
+    {
+      "label": "FAQ Header Background",
+      "id": "faq_heading_background",
+      "type": "color",
+      "default": "#f3f3f3"
+    },
+    {
+      "label": "FAQ Content Background",
+      "id": "faq_content_background",
+      "type": "color",
+      "default": "#f5f5f5"
+    }
+  ]
+}
+{% endschema %}
+

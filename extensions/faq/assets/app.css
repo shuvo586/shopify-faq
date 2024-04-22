@@ -1,0 +1,47 @@
+details {
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.3);
+}
+summary {
+    position: relative;
+    padding: 10px;
+    border-radius: 5px;
+}
+summary::marker {
+    content: none;
+}
+summary::before,
+summary::after {
+    content: '';
+}
+summary::before,
+summary::after {
+    width: .75em;
+    height: 0;
+    border-bottom: 2px solid;
+    position: absolute;
+    top: calc(50% - 1px);
+    right: 10px;
+    transform: translateY(-50%);
+}
+summary::after {
+    transform: rotate(90deg);
+    transform-origin: 50% 50%;
+}
+[open] summary::after {
+    transform: rotate(0deg);
+}
+
+details[open] summary {border-radius: 5px 5px 0 0;}
+p > *:first-child {margin: 0;}
+p > * + * {margin: 0.75em 0 0 0;}
+p {padding: 10px; margin: 0;}
+
+details summary {
+    cursor: pointer;
+    transition: margin 150ms ease-out;
+}
+details[open] summary {
+    margin-bottom: 10px;
+}
